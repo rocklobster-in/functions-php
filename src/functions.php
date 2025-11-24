@@ -28,7 +28,9 @@ function array_flatten( mixed $input ): array {
  */
 function strip_whitespaces( string|array $input ): string|array {
 	if ( is_array( $input ) ) {
-		return array_map( 'strip_whitespaces', $input );
+		return array_map( static function ( $item ) {
+			return strip_whitespaces( $item );
+		}, $input );
 	}
 
 	$whitespaces = '\x09-\x0D\x20\x85\xA0\x{1680}\x{180E}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{FEFF}';
@@ -57,7 +59,9 @@ function strip_whitespaces( string|array $input ): string|array {
  */
 function canonicalize_newline( string|array $input ): string|array {
 	if ( is_array( $input ) ) {
-		return array_map( 'canonicalize_newline', $input );
+		return array_map( static function ( $item ) {
+			return canonicalize_newline( $item );
+		}, $input );
 	}
 
 	return str_replace( [ "\r\n", "\r", "\n" ], "\n", $input );
@@ -73,9 +77,15 @@ function canonicalize_newline( string|array $input ): string|array {
 function exclude_blank( array $input ): array {
 	return array_reduce( $input, static function ( $carry, $item ) {
 		if ( is_array( $item ) ) {
-			$carry = array_merge( $carry, exclude_blank( $item ) );
-		} elseif ( isset( $item ) and '' !== $item ) {
-			$carry[] = $item;
+			$item = exclude_blank( $item );
+
+			if ( ! empty( $item ) ) {
+				$carry[] = $item;
+			}
+		} elseif ( isset( $item ) ) {
+			if ( '' !== $item ) {
+				$carry[] = $item;
+			}
 		}
 
 		return $carry;
