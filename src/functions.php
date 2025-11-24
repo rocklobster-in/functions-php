@@ -75,19 +75,21 @@ function canonicalize_newline( string|array $input ): string|array {
  * @return array Array without blank text values.
  */
 function exclude_blank( array $input ): array {
-	return array_reduce( $input, static function ( $carry, $item ) {
+	$output = [];
+
+	foreach ( $input as $key => $item ) {
 		if ( is_array( $item ) ) {
 			$item = exclude_blank( $item );
 
 			if ( ! empty( $item ) ) {
-				$carry[] = $item;
+				$output[ $key ] = $item;
 			}
 		} elseif ( isset( $item ) ) {
 			if ( '' !== $item ) {
-				$carry[] = $item;
+				$output[ $key ] = $item;
 			}
 		}
+	}
 
-		return $carry;
-	}, [] );
+	return $output;
 }
