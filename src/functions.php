@@ -77,9 +77,15 @@ function canonicalize_newline( string|array $input ): string|array {
 function exclude_blank( array $input ): array {
 	return array_reduce( $input, static function ( $carry, $item ) {
 		if ( is_array( $item ) ) {
-			$carry = array_merge( $carry, exclude_blank( $item ) );
-		} elseif ( isset( $item ) and '' !== $item ) {
-			$carry[] = $item;
+			$item = exclude_blank( $item );
+
+			if ( ! empty( $item ) ) {
+				$carry[] = $item;
+			}
+		} elseif ( isset( $item ) ) {
+			if ( '' !== $item ) {
+				$carry[] = $item;
+			}
 		}
 
 		return $carry;
