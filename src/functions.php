@@ -33,7 +33,7 @@ function strip_whitespaces( string|array $input ): string|array {
 		}, $input );
 	}
 
-	$whitespaces = '\x09-\x0D\x20\x85\xA0\x{1680}\x{180E}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{FEFF}';
+	$whitespaces = '\x09-\x0D\x20\xA0\x{1680}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{FEFF}';
 
 	$input = preg_replace(
 		sprintf( '/^[%s]+/u', $whitespaces ),
