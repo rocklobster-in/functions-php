@@ -11,6 +11,15 @@
   "require": {
     "php": ">=8.3"
   },
+  "archive": {
+    "exclude": [
+      "/.*",
+      "/node_modules",
+      "/package-lock.json",
+      "/package.json",
+      "/parallel-lint.phar"
+    ]
+  },
   "autoload": {
     "files": [
       "src/functions.php"
