@@ -1,6 +1,9 @@
 # PHP Archive
 *.phar
 
+# Composer
+vendor/
+
 # Logs
 logs
 *.log

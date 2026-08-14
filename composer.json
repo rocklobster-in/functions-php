@@ -14,10 +14,8 @@
   "archive": {
     "exclude": [
       "/.*",
-      "/node_modules",
       "/package-lock.json",
-      "/package.json",
-      "/parallel-lint.phar"
+      "/package.json"
     ]
   },
   "autoload": {
