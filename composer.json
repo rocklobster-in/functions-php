@@ -24,9 +24,11 @@
     ]
   },
   "scripts": {
-    "lint": "parallel-lint src/"
+    "lint": "parallel-lint src/",
+    "test": "phpunit"
   },
   "require-dev": {
-    "php-parallel-lint/php-parallel-lint": "^1.4"
+    "php-parallel-lint/php-parallel-lint": "^1.4",
+    "phpunit/phpunit": "^12.5"
   }
 }
