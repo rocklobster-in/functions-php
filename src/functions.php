@@ -37,10 +37,10 @@ function strip_whitespaces(string|array $input): string|array
         }, $input);
     }
 
-    $input = scrub_utf8($input);
-
     $whitespaces =
         '\x09-\x0D\x20\xA0\x{1680}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{FEFF}';
+
+    $input = scrub_utf8($input);
 
     $input = preg_replace(sprintf("/^[%s]+/u", $whitespaces), "", $input);
 
@@ -104,12 +104,6 @@ function exclude_blank(array $input): array
  */
 function scrub_utf8(string $input): string
 {
-    // Use wp_scrub_utf8() on WordPress.
-    if (function_exists("wp_scrub_utf8")) {
-        return wp_scrub_utf8($input);
-    }
-
-    // Will fail if mbstring is not available.
     $prev_replacement_character = mb_substitute_character();
     mb_substitute_character(0xfffd);
     $scrubbed = mb_scrub($input, "UTF-8");
